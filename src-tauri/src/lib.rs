@@ -7,7 +7,7 @@ async fn greet(name: &str, handle: tauri::AppHandle) -> Result<String, ()> {
     let url = "https://login.live.com/oauth20_authorize.srf?client_id=aaaf3f8c-8b99-4e7b-8265-b637bd89317e&response_type=code&redirect_uri=http://localhost:8080&scope=XboxLive.signin%20offline_access&state=NOT_NEEDED";
     let url = Url::parse(url).unwrap();
     let webview_window = tauri::webview::WebviewWindowBuilder::new(&handle.clone(), "ms", tauri::WebviewUrl::External(url))
-        .additional_browser_args("--enable-features=msWebView2EnableDraggableRegions --disable-features=OverscrollHistoryNavigation,msExperimentalScrolling")
+        .additional_browser_args("--enable-features=msWebView2EnableDraggableRegions --disable-features=OverscrollHistoryNavigation,msExperimentalScrolling,msWebOOUI,msPdfOOUI,msSmartScreenProtection")
         .on_navigation(move |url| {
         if url.to_string().contains("code=") {
             let _ = handle.emit("oauth:ms:callback_url", url.to_string());
